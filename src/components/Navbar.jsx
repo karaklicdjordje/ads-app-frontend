@@ -14,13 +14,15 @@ const Navbar = () => {
       <h2 onClick={() => navigate('/home')} style={{ cursor: 'pointer' }}>AdsApp</h2>
       <div>
         <Link to="/home">All Ads</Link>
+
         {user ? (
           <>
+            <Link to="/my-ads" style={{ marginLeft: '15px' }}>My Ads</Link> {/* ← novi link */}
             <span style={{ marginLeft: '15px' }}>Welcome, {user.username}</span>
-            <button onClick={handleLogout} className="logout-btn">Logout</button>
+            <button onClick={handleLogout} className="logout-btn" style={{ marginLeft: '10px' }}>Logout</button>
           </>
         ) : (
-          <Link to="/login">Login</Link>
+          <Link to="/login" style={{ marginLeft: '15px' }}>Login</Link>
         )}
       </div>
     </nav>

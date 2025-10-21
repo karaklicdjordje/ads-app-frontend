@@ -9,20 +9,20 @@ const AdsList = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const navigate = useNavigate();
 
-  // Učitaj kategorije pri pokretanju
+  // Load categories
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const res = await api.get("/categories");
         setCategories(res.data);
       } catch (err) {
-        console.error("Greška pri učitavanju kategorija:", err);
+        console.error("Error with categories!:", err);
       }
     };
     fetchCategories();
   }, []);
 
-  // Učitaj oglase (filtrirane po nazivu ili kategoriji)
+  // Load ads (fileter by name or category)
   const fetchAds = async () => {
     try {
       let url = "/ads";
@@ -38,20 +38,20 @@ const AdsList = () => {
       const res = await api.get(url);
       setAds(res.data);
     } catch (err) {
-      console.error("Greška pri učitavanju oglasa:", err);
+      console.error("Error with load ads:", err);
     }
   };
 
-  // Učitaj oglase kada se promeni pretraga ili kategorija
+  // load ads after search
   useEffect(() => {
     fetchAds();
   }, [searchTerm, selectedCategory]);
 
   return (
     <div className="ads-container">
-      <h2>📦 Svi oglasi</h2>
+      <h2>📦 All ads</h2>
 
-      {/* Sekcija za filtere */}
+      {/* filtering */}
       <div
         style={{
           display: "flex",
@@ -62,7 +62,7 @@ const AdsList = () => {
       >
         <input
           type="text"
-          placeholder="Pretraži po nazivu..."
+          placeholder="Search by name..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{ padding: "8px", width: "250px" }}
@@ -73,7 +73,7 @@ const AdsList = () => {
           onChange={(e) => setSelectedCategory(e.target.value)}
           style={{ padding: "8px" }}
         >
-          <option value="">Sve kategorije</option>
+          <option value="">All categories</option>
           {categories.map((cat) => (
             <option key={cat.id} value={cat.id}>
               {cat.name}
@@ -81,13 +81,13 @@ const AdsList = () => {
           ))}
         </select>
 
-        <button onClick={() => navigate("/create-ad")}>➕ Novi oglas</button>
+        <button onClick={() => navigate("/create-ad")}>➕ New ad</button>
       </div>
 
-      {/* Lista oglasa */}
+      {/* list ads */}
       <div className="ads-grid">
         {ads.length === 0 ? (
-          <p>Nema oglasa koji odgovaraju pretrazi.</p>
+          <p>Unfortunatly no ads.</p>
         ) : (
           ads.map((ad) => (
             <div
@@ -104,11 +104,11 @@ const AdsList = () => {
             >
               <h3>{ad.title}</h3>
               <p>
-                <strong>Cena:</strong> ${ad.price}
+                <strong>Price:</strong> ${ad.price}
               </p>
               {ad.category && (
                 <p>
-                  <strong>Kategorija:</strong> {ad.category.name}
+                  <strong>Category:</strong> {ad.category.name}
                 </p>
               )}
               {ad.imageUrl && (

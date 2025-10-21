@@ -12,16 +12,16 @@ const Login = () => {
     try {
       const res = await api.post('/auth/login', { email, password });
 
-      // ✅ Sačuvaj korisnika u localStorage
+      // save user in localstorage
       localStorage.setItem('user', JSON.stringify(res.data));
 
-      alert(`Dobrodošao ${res.data.username}!`);
+      alert(`Welcome ${res.data.username}!`);
 
-      // ✅ Sada idi na home
+      // navigate to Home
       navigate('/home');
     } catch (err) {
       console.error('Login error:', err);
-      alert('Pogrešan email ili lozinka');
+      alert('Wrong email or password');
     }
   };
 
@@ -38,7 +38,7 @@ const Login = () => {
         />
         <input
           type="password"
-          placeholder="Lozinka"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -46,12 +46,12 @@ const Login = () => {
         <button type="submit">Login</button>
       </form>
       <p>
-        Nisi registrovan?{' '}
+        Not register?{' '}
         <span
           style={{ color: 'blue', cursor: 'pointer' }}
           onClick={() => navigate('/register')}
         >
-          Registruj se
+          Please register
         </span>
       </p>
     </div>

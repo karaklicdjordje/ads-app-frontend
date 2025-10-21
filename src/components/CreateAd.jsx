@@ -11,14 +11,14 @@ const CreateAd = () => {
   const [categories, setCategories] = useState([]);
   const [categoryId, setCategoryId] = useState("");
 
-  // Učitaj sve kategorije sa backend-a
+  // Load all categories
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const res = await api.get("/categories");
         setCategories(res.data);
       } catch (err) {
-        console.error("Greška pri učitavanju kategorija:", err);
+        console.error("Error!:", err);
       }
     };
     fetchCategories();
@@ -28,7 +28,7 @@ const CreateAd = () => {
     e.preventDefault();
 
     if (!categoryId) {
-      alert("Molimo izaberite kategoriju!");
+      alert("Please chose the category!");
       return;
     }
 
@@ -39,28 +39,28 @@ const CreateAd = () => {
         withCredentials: true,
       });
 
-      alert("Oglas uspešno kreiran!");
+      alert("Ad added!");
       navigate("/home");
     } catch (err) {
-      console.error("Greška pri kreiranju oglasa:", err);
-      alert("Došlo je do greške prilikom kreiranja oglasa.");
+      console.error("Error!:", err);
+      alert("Error!.");
     }
   };
 
   return (
     <div className="create-ad-container">
-      <h2>Kreiraj novi oglas</h2>
+      <h2>Create new ad</h2>
       <form onSubmit={handleSubmit} className="create-ad-form">
         <input
           type="text"
-          placeholder="Naslov"
+          placeholder="Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
         />
 
         <textarea
-          placeholder="Opis oglasa"
+          placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required
@@ -68,7 +68,7 @@ const CreateAd = () => {
 
         <input
           type="number"
-          placeholder="Cena"
+          placeholder="Price"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           required
@@ -76,18 +76,18 @@ const CreateAd = () => {
 
         <input
           type="text"
-          placeholder="URL slike (opciono)"
+          placeholder="URL picture (optional)"
           value={imageUrl}
           onChange={(e) => setImageUrl(e.target.value)}
         />
 
-        {/* Dropdown za izbor kategorije */}
+        {/* Dropdown for category */}
         <select
           value={categoryId}
           onChange={(e) => setCategoryId(e.target.value)}
           required
         >
-          <option value="">-- Izaberite kategoriju --</option>
+          <option value="">-- Choose the category --</option>
           {categories.map((cat) => (
             <option key={cat.id} value={cat.id}>
               {cat.name}
@@ -95,7 +95,7 @@ const CreateAd = () => {
           ))}
         </select>
 
-        <button type="submit">Sačuvaj oglas</button>
+        <button type="submit">Save ad</button>
       </form>
     </div>
   );
