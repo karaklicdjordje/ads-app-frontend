@@ -11,9 +11,16 @@ const Login = () => {
     e.preventDefault();
     try {
       const res = await api.post('/auth/login', { email, password });
+
+      // ✅ Sačuvaj korisnika u localStorage
+      localStorage.setItem('user', JSON.stringify(res.data));
+
       alert(`Dobrodošao ${res.data.username}!`);
+
+      // ✅ Sada idi na home
       navigate('/home');
     } catch (err) {
+      console.error('Login error:', err);
       alert('Pogrešan email ili lozinka');
     }
   };
@@ -39,7 +46,13 @@ const Login = () => {
         <button type="submit">Login</button>
       </form>
       <p>
-        Nisi registrovan? <span style={{color: 'blue', cursor: 'pointer'}} onClick={() => navigate('/register')}>Registruj se</span>
+        Nisi registrovan?{' '}
+        <span
+          style={{ color: 'blue', cursor: 'pointer' }}
+          onClick={() => navigate('/register')}
+        >
+          Registruj se
+        </span>
       </p>
     </div>
   );
