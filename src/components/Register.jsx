@@ -15,7 +15,7 @@ const Register = () => {
       alert('User successfully registered!');
       navigate('/login');
     } catch (err) {
-      alert('Došlo je do greške prilikom registracije');
+      alert('Error!');
     }
   };
 

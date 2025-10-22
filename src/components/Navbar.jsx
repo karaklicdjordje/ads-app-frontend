@@ -17,7 +17,7 @@ const Navbar = () => {
 
         {user ? (
           <>
-            <Link to="/my-ads" style={{ marginLeft: '15px' }}>My Ads</Link> {/* ← novi link */}
+            <Link to="/my-ads" style={{ marginLeft: '15px' }}>My Ads</Link> {/* ← new link */}
             <span style={{ marginLeft: '15px' }}>Welcome, {user.username}</span>
             <button onClick={handleLogout} className="logout-btn" style={{ marginLeft: '10px' }}>Logout</button>
           </>

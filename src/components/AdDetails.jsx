@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import api from '../api/api';
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import api from "../api/api";
 
 const AdDetails = () => {
   const { id } = useParams();
   const [ad, setAd] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAd = async () => {
@@ -13,28 +12,31 @@ const AdDetails = () => {
         const res = await api.get(`/ads/${id}`);
         setAd(res.data);
       } catch (err) {
-        console.error('Error fetching ad details:', err);
+        console.error("Error loading ad:", err);
       }
     };
     fetchAd();
   }, [id]);
 
-  if (!ad) return <p>Loading ad details...</p>;
+  if (!ad) return <p>Loading...</p>;
 
   return (
     <div className="ad-details">
-      <button onClick={() => navigate('/home')}>← Back to Ads</button>
       <h2>{ad.title}</h2>
-      {ad.imageUrl && <img src={ad.imageUrl} alt={ad.title} className="ad-details-img" />}
-      <table>
-        <tbody>
-          <tr><td><strong>Description:</strong></td><td>{ad.description}</td></tr>
-          <tr><td><strong>Price:</strong></td><td>${ad.price}</td></tr>
-          <tr><td><strong>Category:</strong></td><td>{ad.category?.name}</td></tr>
-          <tr><td><strong>Owner:</strong></td><td>{ad.owner?.username}</td></tr>
-          <tr><td><strong>Created:</strong></td><td>{new Date(ad.createdAt).toLocaleString()}</td></tr>
-        </tbody>
-      </table>
+      <p>{ad.description}</p>
+      <p><strong>Price:</strong> ${ad.price}</p>
+      <p><strong>Category:</strong> {ad.category?.name}</p>
+
+      {/* 🖼️ Ovde prikazujemo sliku ako postoji */}
+      {ad.imageUrl ? (
+        <img
+          src={ad.imageUrl}
+          alt={ad.title}
+          style={{ width: "300px", borderRadius: "10px", marginTop: "10px" }}
+        />
+      ) : (
+        <p style={{ fontStyle: "italic" }}>No image uploaded</p>
+      )}
     </div>
   );
 };
